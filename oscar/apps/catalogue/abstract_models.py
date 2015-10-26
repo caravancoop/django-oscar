@@ -4,6 +4,7 @@ from datetime import datetime, date
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.validators import RegexValidator
+from django.utils.functional import cached_property
 from django.db import models
 from django.db.models import Sum, Count, get_model
 from django.utils.translation import ugettext_lazy as _
@@ -515,6 +516,10 @@ class AbstractProduct(models.Model):
             self.rating = None
         self.save()
 
+    @cached_property
+    def num_approved_reviews(self):
+        return self.reviews.filter(
+            status=self.reviews.model.APPROVED).count()
 
 class ProductRecommendation(models.Model):
     """

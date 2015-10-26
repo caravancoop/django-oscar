@@ -70,7 +70,7 @@
 			{% if product.rating != None %}
             <p class="star {{ product.rating|as_stars }}">
                 <small><a href="{% url catalogue:reviews-list product.slug product.id %}">
-                        {% blocktrans count reviews|length as num_reviews %}
+                        {% blocktrans count product.num_approved_reviews as num_reviews %}
                         1 custom review
                         {% plural %}
                         {{ num_reviews }} customer reviews
@@ -137,7 +137,7 @@
         {% endfor %}
         <tr>
 			<th>{% trans "Num reviews" %}</th>
-            <td>{{ reviews.count|default:0 }}</td>
+            <td>{{ product.num_approved_reviews|default:0 }}</td>
         </tr>
         <tr>
             <td></td>
@@ -149,13 +149,13 @@
     {% block product_review %}
     <section>
         <div id="reviews" class="sub-header">
-            {% if reviews %}
+            {% if product.num_approved_reviews > 3 %}
                 <a href="{% url catalogue:reviews-list product.slug product.id %}" class="btn pull-right">{% trans "See all reviews" %}</a>
             {% endif %}
 			<h2>{% trans "Customer Reviews" %}</h2>
         </div>
 
-        {% if not reviews %}
+        {% if product.num_approved_reviews == 0 %}
             <p>
                 {% trans "This product does not have any reviews yet" %} - 
                 <a href="{% url catalogue:reviews-add product.slug product.id %}#addreview">{% trans "be the first to write one" %}</a>.
