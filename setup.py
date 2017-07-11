@@ -35,9 +35,9 @@ setup(name='django-oscar',
       install_requires=[
           'django>=1.4,<1.5',
           # PIL is required for image fields, Pillow is the "friendly" PIL fork
-          'pillow>=1.7.8,<2.0.0',
+          'pillow==2.3.0',
           # Oscar ships with migraations
-          'South>=0.7.6,<0.8',
+          'South==0.8.3',
           # We use the ModelFormSetView from django-extra-views for the basket
           # page
           'django-extra-views>=0.2,<0.6',
